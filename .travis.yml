@@ -11,6 +11,10 @@ matrix:
     - python: 3.7
       env: TOXENV=unit-py37
       dist: xenial
+  allow_failures:
+    - python: 3.7
+      env: TOXENV=check-extra
+      dist: xenial
 
 install:
   - pip install tox

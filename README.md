@@ -1,5 +1,7 @@
 # Dice Stats
 
+[![Master Build Status](https://travis-ci.org/Peilonrayz/dice_stats.svg?branch=master)](https://travis-ci.org/Peilonrayz/dice_stats)
+
 Get statistics for rolling dice.
 
 # Installation
