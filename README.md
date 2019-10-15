@@ -4,14 +4,17 @@
 
 Get statistics for rolling dice.
 
-# Installation
+## Installation
 
 ```bash
-$ git pull https://github.com/Peilonrayz/dice_stats.git
-$ pip install .
+$ pip install dice_stats
 ```
 
-# Testing
+## How to use
+
+The [documentation is available online](https://peilonrayz.github.io/dice_stats/index.html).
+
+# Development
 
 All tests use are run via tox. This includes running static analysis tools, unit tests and generating documentation.
 
