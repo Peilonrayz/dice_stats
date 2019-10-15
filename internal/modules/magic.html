@@ -1,0 +1,454 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Base Dice &#8212; dice_stats 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <script type="text/javascript" src="../../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="Tests" href="../tests/index.html" />
+    <link rel="prev" title="Dice Stats" href="index.html" />
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="module-dice_stats._magic.base_dice">
+<span id="base-dice"></span><h1>Base Dice<a class="headerlink" href="#module-dice_stats._magic.base_dice" title="Permalink to this headline">¶</a></h1>
+<p>Core of the dice class.</p>
+<p>These methods are the core of the dice class and the minimum needed for
+the other mixins to extend from. These mostly focus on allowing the dice
+to be initialized correctly.</p>
+<dl class="class">
+<dt id="dice_stats._magic.base_dice.BaseDice">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats._magic.base_dice.</code><code class="sig-name descname">BaseDice</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Base Dice class, defines standard methods for initializing dice objects.</p>
+<p>Other magic dice classes inherit from this.</p>
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.__init__">
+<code class="sig-name descname">__init__</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.__init__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Initialize Dice class.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]]) – <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> dictionary.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> which allows a dice to
+have a 50% chance, whilst allowing the
+<a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> to total 1.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="docutils literal notranslate"><span class="pre">None</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a copy of the current dice.</p>
+<p>This allows other methods to easily mutate a copy of a provided
+dice without mutating the dice a user provides. This helps keep
+the purity of a lot of the functions in this library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A copy of this dice, including its type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.from_empty">
+<em class="property">classmethod </em><code class="sig-name descname">from_empty</code><span class="sig-paren">(</span><em class="sig-param">value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.from_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty chance.</p>
+<p>A <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> must be specified and so defaults to
+0 as the unwanted value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]) – <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> of the failure value.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An empty dice.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.from_full">
+<em class="property">classmethod </em><code class="sig-name descname">from_full</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.from_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>From full <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.</p>
+<p>This is a helper function to build dice from the
+<a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.
+Allowing a different <a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]) – <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> object.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new dice with the provided chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.from_partial">
+<em class="property">classmethod </em><code class="sig-name descname">from_partial</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.from_partial" title="Permalink to this definition">¶</a></dt>
+<dd><p>From partial <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.</p>
+<p>This is a helper function to build dice from the
+<a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>, where the chance’s always
+total 1. By defaulting all undefined <a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>
+to the chance of 0, rather than erroring.</p>
+<p>This may become deprecated in the future, as it seems like there
+is no use for this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]]) – <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> object.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new dice with the provided chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.base_dice.BaseDice.total_chance">
+<em class="property">property </em><code class="sig-name descname">total_chance</code><a class="headerlink" href="#dice_stats._magic.base_dice.BaseDice.total_chance" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> of the values of this dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The <a class="reference internal" href="../../public/public.html#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> of the dice.</p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dice_stats._magic.basic">
+<span id="basic"></span><h1>Basic<a class="headerlink" href="#module-dice_stats._magic.basic" title="Permalink to this headline">¶</a></h1>
+<p>Methods all classes should define.</p>
+<p>Methods that are at the base of the class, but don’t need to be defined
+in base_dice.py. These are things like <code class="code docutils literal notranslate"><span class="pre">str</span></code>, <code class="code docutils literal notranslate"><span class="pre">repr</span></code> and
+<code class="code docutils literal notranslate"><span class="pre">bool</span></code>.</p>
+<p>These are magic methods that any class should define to make Pythonic
+development easier.</p>
+<dl class="class">
+<dt id="dice_stats._magic.basic.BasicDice">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats._magic.basic.</code><code class="sig-name descname">BasicDice</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.basic.BasicDice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Basic magic methods mixin class.</p>
+<dl class="method">
+<dt id="dice_stats._magic.basic.BasicDice.__bool__">
+<code class="sig-name descname">__bool__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.basic.BasicDice.__bool__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Falsy if the only <a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> is 0.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.basic.BasicDice.__contains__">
+<code class="sig-name descname">__contains__</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.basic.BasicDice.__contains__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Is <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> a possible <a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>.</p>
+<p>This doesn’t check if the <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> is contained
+in the <a class="reference internal" href="../../public/public.html#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>. It checks if there is a
+potability of the dice. This is as some dice will show 0 as a
+<a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> with 0% <a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>,
+however as it’s not possible it doesn’t make sense to say it’s a
+<a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> of the dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">bool</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.basic.BasicDice.__repr__">
+<code class="sig-name descname">__repr__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.basic.BasicDice.__repr__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Repr format of Dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.basic.BasicDice.__str__">
+<code class="sig-name descname">__str__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.basic.BasicDice.__str__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Str format of Dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">str</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dice_stats._magic.mapping">
+<span id="mapping"></span><h1>Mapping<a class="headerlink" href="#module-dice_stats._magic.mapping" title="Permalink to this headline">¶</a></h1>
+<p>Mapping interface.</p>
+<p>Code to make Dice implement an immutable mapping interface.
+This interface helps to keep code that uses dice Pythonic as they can
+use standard methods, and it the immutability helps make all the code
+simpler to use as we don’t need to think about mutability.</p>
+<dl class="class">
+<dt id="dice_stats._magic.mapping.MappingDice">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats._magic.mapping.</code><code class="sig-name descname">MappingDice</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.mapping.MappingDice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mapping mixin.</p>
+<dl class="method">
+<dt id="dice_stats._magic.mapping.MappingDice.__getitem__">
+<code class="sig-name descname">__getitem__</code><span class="sig-paren">(</span><em class="sig-param">item</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.mapping.MappingDice.__getitem__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get <a class="reference internal" href="../../public/public.html#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.mapping.MappingDice.__iter__">
+<code class="sig-name descname">__iter__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.mapping.MappingDice.__iter__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get all <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats._magic.mapping.MappingDice.__len__">
+<code class="sig-name descname">__len__</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.mapping.MappingDice.__len__" title="Permalink to this definition">¶</a></dt>
+<dd><p>Count of all <a class="reference internal" href="../../public/public.html#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="attribute">
+<dt id="dice_stats._magic.mapping.MappingDice.__weakref__">
+<code class="sig-name descname">__weakref__</code><a class="headerlink" href="#dice_stats._magic.mapping.MappingDice.__weakref__" title="Permalink to this definition">¶</a></dt>
+<dd><p>list of weak references to the object (if defined)</p>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="module-dice_stats._magic.numeric">
+<span id="numeric"></span><h1>Numeric<a class="headerlink" href="#module-dice_stats._magic.numeric" title="Permalink to this headline">¶</a></h1>
+<p>Numeric operators.</p>
+<p>Add support for using Dice numerically. For the most part all operations
+should work as expected. But two methods have two different ways they
+could be reasonably expected to work.</p>
+<p>For the examples <code class="code docutils literal notranslate"><span class="pre">d6</span></code> is defined as <code class="code docutils literal notranslate"><span class="pre">Dice.from_dice(6)</span></code>.</p>
+<blockquote>
+<div><ul>
+<li><p>Most operations work as if you were applying that function to all
+values in the dice. This means if you were to use
+<code class="code docutils literal notranslate"><span class="pre">Dice.from_dice(6)</span> <span class="pre">+</span> <span class="pre">2</span></code> then the values would range from 3 to 8,
+rather than from 1 to 6. The chance for all would still be 1/6.</p>
+<p>You can also add dice to other dice. <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">+</span> <span class="pre">d6</span></code> would result in
+a triangle chance with 7 being the most likely result.</p>
+</li>
+<li><p>However it is unclear what <code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">d6</span></code> should result in. This is
+as 2d6 is a common way to denote rolling two d6s and adding the
+results together. Which is the same as <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">+</span> <span class="pre">d6</span></code>.</p>
+<p>There is then the option of performing the cartesian product of
+<code class="code docutils literal notranslate"><span class="pre">{2}</span></code> and <code class="code docutils literal notranslate"><span class="pre">{1,</span> <span class="pre">2,</span> <span class="pre">3,</span> <span class="pre">4,</span> <span class="pre">5,</span> <span class="pre">6}</span></code>, which would result in
+<code class="code docutils literal notranslate"><span class="pre">{2,</span> <span class="pre">4,</span> <span class="pre">6,</span> <span class="pre">8,</span> <span class="pre">10,</span> <span class="pre">12}</span></code>.</p>
+<p>Given that both make sense, but we can only define one to be _the_
+multiplication operator. We have decided to keep with common
+convention and have made the multiplication operator work the same
+way as <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">+</span> <span class="pre">d6</span></code>. If the cartesian product is required then it
+is available via the <code class="code docutils literal notranslate"><span class="pre">non_repeat</span></code> property. Such as
+<code class="code docutils literal notranslate"><span class="pre">2</span> <span class="pre">*</span> <span class="pre">d6.non_repeat</span></code>.</p>
+<p>We have also changed the power operator to work in the same way.
+And so <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">**</span> <span class="pre">2</span></code> is the same as <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">*</span> <span class="pre">d6.non_repeat</span></code>.</p>
+</li>
+</ul>
+</div></blockquote>
+<dl class="class">
+<dt id="dice_stats._magic.numeric.NonRepeat">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">NonRepeat</code><span class="sig-paren">(</span><em class="sig-param">dice</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.NonRepeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Allow alternate form of multiplication and powers.</p>
+</dd></dl>
+
+<dl class="class">
+<dt id="dice_stats._magic.numeric.NumericDice">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">NumericDice</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.NumericDice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Mixins for numeric operators.</p>
+<dl class="method">
+<dt id="dice_stats._magic.numeric.NumericDice.non_repeat">
+<em class="property">property </em><code class="sig-name descname">non_repeat</code><a class="headerlink" href="#dice_stats._magic.numeric.NumericDice.non_repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a NonRepeat object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dice_stats._magic.numeric.NonRepeat" title="dice_stats._magic.numeric.NonRepeat"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonRepeat</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="dice_stats._magic.numeric.operation">
+<code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">operation</code><span class="sig-paren">(</span><em class="sig-param">lhs</em>, <em class="sig-param">rhs</em>, <em class="sig-param">operation_</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle the normal direction of operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dice_stats._magic.numeric.NumericDice" title="dice_stats._magic.numeric.NumericDice"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericDice</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="dice_stats._magic.numeric.repeat_operation">
+<code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">repeat_operation</code><span class="sig-paren">(</span><em class="sig-param">dice</em>, <em class="sig-param">value</em>, <em class="sig-param">operator_</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.repeat_operation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle repeating an operation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dice_stats._magic.numeric.NumericDice" title="dice_stats._magic.numeric.NumericDice"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericDice</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="dice_stats._magic.numeric.roperation">
+<code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">roperation</code><span class="sig-paren">(</span><em class="sig-param">lhs</em>, <em class="sig-param">rhs</em>, <em class="sig-param">operator_</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.roperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handle the reverse of common operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dice_stats._magic.numeric.NumericDice" title="dice_stats._magic.numeric.NumericDice"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericDice</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="function">
+<dt id="dice_stats._magic.numeric.soperation">
+<code class="sig-prename descclassname">dice_stats._magic.numeric.</code><code class="sig-name descname">soperation</code><span class="sig-paren">(</span><em class="sig-param">self</em>, <em class="sig-param">operator_</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats._magic.numeric.soperation" title="Permalink to this definition">¶</a></dt>
+<dd><p>Handel’s single operand operations.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="#dice_stats._magic.numeric.NumericDice" title="dice_stats._magic.numeric.NumericDice"><code class="xref py py-class docutils literal notranslate"><span class="pre">NumericDice</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../../index.html">dice_stats</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../public/public.html">Dice Stats</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../public/tutorial.html">Tutorial</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../index.html">Internal</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html">Dice Stats</a></li>
+<li class="toctree-l2"><a class="reference internal" href="../tests/index.html">Tests</a></li>
+</ul>
+</li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../index.html">Internal</a><ul>
+  <li><a href="index.html">Dice Stats</a><ul>
+      <li>Previous: <a href="index.html" title="previous chapter">Dice Stats</a></li>
+      <li>Next: <a href="../tests/index.html" title="next chapter">Tests</a></li>
+  </ul></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Peilonrayz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/internal/modules/magic.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>

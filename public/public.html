@@ -1,0 +1,815 @@
+
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta charset="utf-8" />
+    <title>Dice Stats &#8212; dice_stats 0.0.1 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/graphviz.css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <script type="text/javascript" src="../_static/language_data.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Tutorial" href="tutorial.html" />
+    <link rel="prev" title="Welcome to dice_stats’s documentation!" href="../index.html" />
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  </head><body>
+  
+
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="dice-stats">
+<span id="id1"></span><h1>Dice Stats<a class="headerlink" href="#dice-stats" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="introduction">
+<h2>Introduction<a class="headerlink" href="#introduction" title="Permalink to this headline">¶</a></h2>
+<p>If you’re a new to this library you may want to look at the <a class="reference internal" href="tutorial.html#tutorial"><span class="std std-ref">Tutorial</span></a>.</p>
+<p>If you’ve gone through that then the <a class="reference internal" href="#terminology"><span class="std std-ref">Terminology</span></a> section
+would help understand the inner mechanics of the Dice class, but
+otherwise this document explains the public interface.</p>
+</div>
+<div class="section" id="module-dice_stats">
+<span id="public-library"></span><h2>Public library<a class="headerlink" href="#module-dice_stats" title="Permalink to this headline">¶</a></h2>
+<p>Advanced Dice statistics without the headaches.</p>
+<p>More description to come.</p>
+<dl class="class">
+<dt id="dice_stats.Dice">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats.</code><code class="sig-name descname">Dice</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Dice class.</p>
+<dl class="method">
+<dt id="dice_stats.Dice.apply_dice">
+<code class="sig-name descname">apply_dice</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">default=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.apply_dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change chances to provided dice.</p>
+<p>This changes the values of the host dice, to the values of the
+provided dice. It does so by changing the provided dice to the
+correct chance.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]) – A mapping of all the <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>
+and dice to change.</p></li>
+<li><p><strong>default</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]) – A dice to use as the default when chances
+doesn’t cover all possible <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A new Dice that acts as if these multiple dice rolls
+happen in one throw.</p>
+</dd>
+</dl>
+<p>Say we’re playing a game where you roll a die to attack people.
+You normally do 1-6 damage, however sometimes there’s a chance
+to do 1-4 - say you had bad footing. To determine what dice you
+use use throw a d3 before using either the d6 or the d4. On a 1
+you use the d4, otherwise it’s the d6.
+To find the chances is easy with this function.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">apply_dice</span><span class="p">(</span>
+            <span class="p">{(</span><span class="mi">1</span><span class="p">,):</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">4</span><span class="p">)},</span>
+            <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1: 19.4%  7/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 11.1%  1/9
+  6: 11.1%  1/9
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.apply_functions">
+<code class="sig-name descname">apply_functions</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">default=None</em>, <em class="sig-param">apply=&lt;function Dice.&lt;lambda&gt;&gt;</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.apply_functions" title="Permalink to this definition">¶</a></dt>
+<dd><p>Apply a callback to the provided chances.</p>
+<p>This is the more complex version <a class="reference internal" href="#dice_stats.Dice.apply_dice" title="dice_stats.Dice.apply_dice"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.apply_dice()</span></code></a>.
+With this version you can pass a callback that mutates the
+segment of the dice provided.</p>
+<p>This callback is given a segment of the host dice, this means
+that the callback has all the information that it should need,
+as this dice would have all the <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> and
+<a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> it needs. The <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>
+will also be the correct for that segment of the dice results.</p>
+<p>The callback then has to return a dice object that that segment
+gets mutated to. For example if you’re using this to reroll dice,
+then one function would return the segment provided, where the
+other would return the host dice of sorts.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]], <code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]]) – The mapping that holds the outputs.</p></li>
+<li><p><strong>default</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]]) – The function to apply if there are missing values.</p></li>
+<li><p><strong>apply</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Callable</span></code>[[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]) – A function to mutate each dice segment before they
+reach the <code class="code docutils literal notranslate"><span class="pre">chances</span></code> callback.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>New dice that’s been fully mutated by the callbacks.</p>
+</dd>
+</dl>
+<p>To expand on the previous example, if we have a d6 and we’re
+allowed to reroll 1s once, then we could use the following code.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This functionality is already builtin to the
+<a class="reference internal" href="#dice_stats.Dice" title="dice_stats.Dice"><code class="xref py py-class docutils literal notranslate"><span class="pre">dice_stats.Dice</span></code></a> class. You can instead use the
+<a class="reference internal" href="#dice_stats.Dice.reroll" title="dice_stats.Dice.reroll"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.reroll()</span></code></a> method to do this.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">apply_functions</span><span class="p">(</span>
+            <span class="p">{(</span><span class="mi">1</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)},</span>
+            <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1:  2.8%  1/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 19.4%  7/36
+  6: 19.4%  7/36
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.as_total_chance">
+<code class="sig-name descname">as_total_chance</code><span class="sig-paren">(</span><em class="sig-param">total_chance</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.as_total_chance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<p>This adjusts each <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> by the scale of
+the old and new <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – Desired <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A new dice with the specified <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+</dd>
+</dl>
+<p>For example, say we have a d3 which has a
+100% <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>, however it should be a
+200% <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>. Then we use this function to
+change it. It will also change all the <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>
+from 1/3 to 2/3.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">d3</span> <span class="o">=</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d3</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">d3</span><span class="o">.</span><span class="n">as_total_chance</span><span class="p">(</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">1</span><span class="p">)))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1: 33.3%  1/3
+  2: 33.3%  1/3
+  3: 33.3%  1/3
+)
+Dice[2](
+  1: 66.7%  2/3
+  2: 66.7%  2/3
+  3: 66.7%  2/3
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.copy">
+<code class="sig-name descname">copy</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.copy" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a copy of the current dice.</p>
+<p>This allows other methods to easily mutate a copy of a provided
+dice without mutating the dice a user provides. This helps keep
+the purity of a lot of the functions in this library.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A copy of this dice, including its type.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_dice">
+<em class="property">classmethod </em><code class="sig-name descname">from_dice</code><span class="sig-paren">(</span><em class="sig-param">sides</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_dice" title="Permalink to this definition">¶</a></dt>
+<dd><p>Make a dice from a number of sides.</p>
+<p>This is a very useful convenience function, this is the most
+common way to build dice as it builds dice with an equal chance
+to land on all faces.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>sides</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>) – Amount of sides the n-sided dice has.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A fair n-sided dice.</p>
+</dd>
+</dl>
+<p>Below is an example of some of the smaller dice you can create
+with this.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">1</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">2</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">3</span><span class="p">))</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1: 100.0%  1/1
+)
+Dice[1](
+  1: 50.0%  1/2
+  2: 50.0%  1/2
+)
+Dice[1](
+  1: 33.3%  1/3
+  2: 33.3%  1/3
+  3: 33.3%  1/3
+)
+Dice[1](
+  1: 16.7%  1/6
+  2: 16.7%  1/6
+  3: 16.7%  1/6
+  4: 16.7%  1/6
+  5: 16.7%  1/6
+  6: 16.7%  1/6
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_empty">
+<em class="property">classmethod </em><code class="sig-name descname">from_empty</code><span class="sig-paren">(</span><em class="sig-param">value=0</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_empty" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create an empty chance.</p>
+<p>A <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> must be specified and so defaults to
+0 as the unwanted value.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>value</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]) – <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> of the failure value.</p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>An empty dice.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_external">
+<em class="property">classmethod </em><code class="sig-name descname">from_external</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">total_chance</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_external" title="Permalink to this definition">¶</a></dt>
+<dd><p>Create a dice from the <a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a> form.</p>
+<p>This doesn’t use the <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> form,
+and so eases use when not using that form.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]) – <a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a>.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dice with the specified chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_full">
+<em class="property">classmethod </em><code class="sig-name descname">from_full</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_full" title="Permalink to this definition">¶</a></dt>
+<dd><p>From full <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.</p>
+<p>This is a helper function to build dice from the
+<a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.
+Allowing a different <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]) – <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> object.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new dice with the provided chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_partial">
+<em class="property">classmethod </em><code class="sig-name descname">from_partial</code><span class="sig-paren">(</span><em class="sig-param">chances=None</em>, <em class="sig-param">total_chance=Fraction(1</em>, <em class="sig-param">1)</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_partial" title="Permalink to this definition">¶</a></dt>
+<dd><p>From partial <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>.</p>
+<p>This is a helper function to build dice from the
+<a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>, where the chance’s always
+total 1. By defaulting all undefined <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>
+to the chance of 0, rather than erroring.</p>
+<p>This may become deprecated in the future, as it seems like there
+is no use for this method.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]]) – <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> object.</p></li>
+<li><p><strong>total_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>A new dice with the provided chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.from_prev_total_chance">
+<em class="property">classmethod </em><code class="sig-name descname">from_prev_total_chance</code><span class="sig-paren">(</span><em class="sig-param">chances</em>, <em class="sig-param">chance</em>, <em class="sig-param">prev_chance</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.from_prev_total_chance" title="Permalink to this definition">¶</a></dt>
+<dd><p>Change a dice from one <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> to another.</p>
+<p>This is a deprecated function, this is likely better expressed
+by using <a class="reference internal" href="#dice_stats.Dice.from_external" title="dice_stats.Dice.from_external"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.from_external()</span></code></a> and
+<a class="reference internal" href="#dice_stats.Dice.as_total_chance" title="dice_stats.Dice.as_total_chance"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.as_total_chance()</span></code></a>.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><ul class="simple">
+<li><p><strong>chances</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Dict</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>], <code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>]) – <a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a>.</p></li>
+<li><p><strong>chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – New <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> amount.</p></li>
+<li><p><strong>prev_chance</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code>) – Old <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> amount.</p></li>
+</ul>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A dice with new chances.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.get">
+<code class="sig-name descname">get</code><span class="sig-paren">(</span><em class="sig-param">k</em><span class="optional">[</span>, <em class="sig-param">d</em><span class="optional">]</span><span class="sig-paren">)</span> &#x2192; D[k] if k in D, else d.  d defaults to None.<a class="headerlink" href="#dice_stats.Dice.get" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.items">
+<code class="sig-name descname">items</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's items<a class="headerlink" href="#dice_stats.Dice.items" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.keys">
+<code class="sig-name descname">keys</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; a set-like object providing a view on D's keys<a class="headerlink" href="#dice_stats.Dice.keys" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.max">
+<code class="sig-name descname">max</code><span class="sig-paren">(</span><em class="sig-param">other=None</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.max" title="Permalink to this definition">¶</a></dt>
+<dd><p>Get the maximum result from two dice.</p>
+<p>Say you’re playing a game which allows you to roll two dice and
+take the highest as your result. To do this you would need a
+cartesian max, which is what this function performs.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>other</strong> (<code class="xref py py-data docutils literal notranslate"><span class="pre">Optional</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]) – Another dice to get the maximum value from.
+If unset then it uses itself.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A new dice of the chances of getting the maximum.</p>
+</dd>
+</dl>
+<p>Say you have can roll two d6s and use the maximum, that would
+simply be:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">max</span><span class="p">())</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1:  2.8%  1/36
+  2:  8.3%  1/12
+  3: 13.9%  5/36
+  4: 19.4%  7/36
+  5: 25.0%  1/4
+  6: 30.6% 11/36
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.non_repeat">
+<em class="property">property </em><code class="sig-name descname">non_repeat</code><a class="headerlink" href="#dice_stats.Dice.non_repeat" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a NonRepeat object.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../internal/modules/magic.html#dice_stats._magic.numeric.NonRepeat" title="dice_stats._magic.numeric.NonRepeat"><code class="xref py py-class docutils literal notranslate"><span class="pre">NonRepeat</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.partition">
+<code class="sig-name descname">partition</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.partition" title="Permalink to this definition">¶</a></dt>
+<dd><p>Remove multiple <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> from the dice.</p>
+<p>Split the dice into two. This removes the values provided in
+the values argument out of the dice, and then returns the rest
+of the values in a separate dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]]) – Selection of <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a> to remove
+from the dice.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>]</p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>Returns two different dice, one with the wanted values,
+the other with the unwanted values.</p>
+</dd>
+</dl>
+<p>For the most part this is used internally when using one of the
+apply functions or the reroll function. However its existence
+helps makes these functions possible and easy to implement.</p>
+<p>To showcase this we’ll define a basic reroll function using this
+function.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>This functionality is already builtin to the
+<a class="reference internal" href="#dice_stats.Dice" title="dice_stats.Dice"><code class="xref py py-class docutils literal notranslate"><span class="pre">dice_stats.Dice</span></code></a> class. You can instead use the
+<a class="reference internal" href="#dice_stats.Dice.reroll" title="dice_stats.Dice.reroll"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.reroll()</span></code></a> method to do this.</p>
+</div>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">reroll</span><span class="p">(</span><span class="n">dice</span><span class="p">,</span> <span class="n">values</span><span class="p">):</span>
+    <span class="n">rerolled</span><span class="p">,</span> <span class="n">kept</span> <span class="o">=</span> <span class="n">dice</span><span class="o">.</span><span class="n">partition</span><span class="p">(</span><span class="n">values</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">Dice</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span>
+        <span class="n">kept</span><span class="p">,</span>
+        <span class="n">dice</span><span class="o">.</span><span class="n">as_total_chance</span><span class="p">(</span><span class="n">rerolled</span><span class="o">.</span><span class="n">total_chance</span><span class="p">),</span>
+    <span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">reroll</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">),</span> <span class="p">(</span><span class="mi">1</span><span class="p">,)))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1:  2.8%  1/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 19.4%  7/36
+  6: 19.4%  7/36
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.reroll">
+<code class="sig-name descname">reroll</code><span class="sig-paren">(</span><em class="sig-param">values</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.reroll" title="Permalink to this definition">¶</a></dt>
+<dd><p>Reroll specified values.</p>
+<p>Since this is a common operation on dice this is some sugar for it.
+It should be noted that whilst this handles the simple instances
+of rerolling, there are some more complex situations that can
+only be handled through custom functions or the
+<a class="reference internal" href="#dice_stats.Dice.apply_functions" title="dice_stats.Dice.apply_functions"><code class="xref py py-meth docutils literal notranslate"><span class="pre">dice_stats.Dice.apply_functions()</span></code></a> method.</p>
+<p>For the simple situation of being able to reroll a range of
+values once then this is all you need.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Parameters</dt>
+<dd class="field-odd"><p><strong>values</strong> (<code class="xref py py-class docutils literal notranslate"><span class="pre">Iterable</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code>[<code class="xref py py-class docutils literal notranslate"><span class="pre">Real</span></code>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Integral</span></code>]]) – Collection of <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p>
+</dd>
+<dt class="field-even">Return type</dt>
+<dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+<dt class="field-odd">Returns</dt>
+<dd class="field-odd"><p>A new dice factoring in rerolls.</p>
+</dd>
+</dl>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span><span class="o">.</span><span class="n">reroll</span><span class="p">((</span><span class="mi">1</span><span class="p">,)))</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1:  2.8%  1/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 19.4%  7/36
+  6: 19.4%  7/36
+)
+</pre></div>
+</div>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.sum">
+<em class="property">classmethod </em><code class="sig-name descname">sum</code><span class="sig-paren">(</span><em class="sig-param">dice</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Dice.sum" title="Permalink to this definition">¶</a></dt>
+<dd><p>Add multiple dice together, increasing their <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<p>This is mostly used when you have multiple partial dice that you
+need to add together only adding the chances together. For
+example lets say we have a 2/3 chance for our outcome to be a d6
+or a 1/3 chance that the outcome is a d4 then the total outcome
+would be the result of those two dice added together, but not in
+the common form - <code class="code docutils literal notranslate"><span class="pre">d6</span> <span class="pre">+</span> <span class="pre">d4</span></code>.</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">Dice</span><span class="o">.</span><span class="n">sum</span><span class="p">([</span>
+    <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">,</span> <span class="n">total_chance</span><span class="o">=</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">2</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+    <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">4</span><span class="p">,</span> <span class="n">total_chance</span><span class="o">=</span><span class="n">Fraction</span><span class="p">(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">3</span><span class="p">)),</span>
+<span class="p">]))</span>
+</pre></div>
+</div>
+<p>Which correctly results in:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1: 19.4%  7/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 11.1%  1/9
+  6: 11.1%  1/9
+)
+</pre></div>
+</div>
+<p>As we can see, the result totals to 100%, and there is a
+significantly higher chance to get a 1-4 then 5 or 6.
+This shows pretty clearly that the outcome is only adding the
+chances together.</p>
+<p>For the most part you can normally use a different function than
+this one if you need to get this sort of output.
+Lets say the game we’re playing says to roll a d3 to decide
+between either the d4 or the d6 to be rolled to get the result.
+On a 1 you roll the d4 otherwise it’s the d6, which could be
+expressed as:</p>
+<div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
+    <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">3</span><span class="p">)</span>
+        <span class="o">.</span><span class="n">apply_dice</span><span class="p">(</span>
+            <span class="p">{(</span><span class="mi">1</span><span class="p">,):</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">4</span><span class="p">)},</span>
+            <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
+        <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Dice[1](
+  1: 19.4%  7/36
+  2: 19.4%  7/36
+  3: 19.4%  7/36
+  4: 19.4%  7/36
+  5: 11.1%  1/9
+  6: 11.1%  1/9
+)
+</pre></div>
+</div>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.total_chance">
+<em class="property">property </em><code class="sig-name descname">total_chance</code><a class="headerlink" href="#dice_stats.Dice.total_chance" title="Permalink to this definition">¶</a></dt>
+<dd><p><a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> of the values of this dice.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></p>
+</dd>
+<dt class="field-even">Returns</dt>
+<dd class="field-even"><p>The <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> of the dice.</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="method">
+<dt id="dice_stats.Dice.values">
+<code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D's values<a class="headerlink" href="#dice_stats.Dice.values" title="Permalink to this definition">¶</a></dt>
+<dd></dd></dl>
+
+</dd></dl>
+
+<dl class="function">
+<dt id="dice_stats.plot_wireframes">
+<code class="sig-prename descclassname">dice_stats.</code><code class="sig-name descname">plot_wireframes</code><span class="sig-paren">(</span><em class="sig-param">results_</em>, <em class="sig-param">only_positive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.plot_wireframes" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a graph from multiple dice results.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code>[<code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code>[&lt;built-in function array&gt;, …]]</p>
+</dd>
+</dl>
+</dd></dl>
+
+<dl class="class">
+<dt id="dice_stats.Range">
+<em class="property">class </em><code class="sig-prename descclassname">dice_stats.</code><code class="sig-name descname">Range</code><span class="sig-paren">(</span><em class="sig-param">start</em>, <em class="sig-param">stop</em>, <em class="sig-param">step</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Range object allowing floating point and infinite ranges.</p>
+<dl class="method">
+<dt id="dice_stats.Range.from_range">
+<em class="property">classmethod </em><code class="sig-name descname">from_range</code><span class="sig-paren">(</span><em class="sig-param">range_</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.Range.from_range" title="Permalink to this definition">¶</a></dt>
+<dd><p>Build a range from mathematical notation.</p>
+<dl class="field-list simple">
+<dt class="field-odd">Return type</dt>
+<dd class="field-odd"><p><a class="reference internal" href="../internal/modules/index.html#dice_stats.range.Range" title="dice_stats.range.Range"><code class="xref py py-class docutils literal notranslate"><span class="pre">Range</span></code></a></p>
+</dd>
+</dl>
+</dd></dl>
+
+</dd></dl>
+
+</div>
+<div class="section" id="terminology">
+<span id="id2"></span><h2>Terminology<a class="headerlink" href="#terminology" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="chances">
+<span id="ds-t-chances"></span><h3>Chances<a class="headerlink" href="#chances" title="Permalink to this headline">¶</a></h3>
+<p>These are made up of pairs of two items, a <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>
+and a <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>. These are contained in a mapping
+where the mapping’s key is the <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>, and the value
+is the <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>.</p>
+<p>This swap of terminology may cause some confusion so I think it should
+be noted again that the mappings value is not the <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p>
+</div>
+<div class="section" id="chances-value">
+<span id="ds-t-chances-value"></span><h3>Chances Value<a class="headerlink" href="#chances-value" title="Permalink to this headline">¶</a></h3>
+<p>This is the value on the dice. For a standard d6 this would mean that
+the dice has 6 values ranging from 1 to 6. And so the the
+<a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a> would have six <a class="reference internal" href="#ds-t-chances-value"><span class="std std-ref">Chances Value</span></a>.</p>
+</div>
+<div class="section" id="chances-chance">
+<span id="ds-t-chances-chance"></span><h3>Chances Chance<a class="headerlink" href="#chances-chance" title="Permalink to this headline">¶</a></h3>
+<p>This is the chance of the value being an outcome. For a standard d6 this
+would mean that all the chances are 1/6. And so the the
+<a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a> would have six <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> all with
+the same value.</p>
+<p>These are all provided as <code class="xref py py-class docutils literal notranslate"><span class="pre">fractions.Fraction</span></code> so that there are
+no floating point issues when calculating the chances. This also allows
+high precision in the chances we calculate.</p>
+<div class="admonition note">
+<p class="admonition-title">Note</p>
+<p>The <a class="reference internal" href="#ds-t-internal-chances-chance"><span class="std std-ref">Internal Chances Chance</span></a> is slightly different to
+the public one.</p>
+</div>
+</div>
+<div class="section" id="total-chance">
+<span id="ds-t-total-chance"></span><h3>Total Chance<a class="headerlink" href="#total-chance" title="Permalink to this headline">¶</a></h3>
+<p>This is the total chance of the dice, this is important as the
+<a class="reference internal" href="#ds-t-chances"><span class="std std-ref">Chances</span></a> and the <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a> total to
+different amounts, as described in the latter.
+Whilst this may at first seem bizarre, some games allow dice to have an
+over, or under, 100% chance. Say we have a game where you roll a d10;</p>
+<blockquote>
+<div><ul class="simple">
+<li><p>on a 1 you miss,</p></li>
+<li><p>on a 10 you hit twice, otherwise</p></li>
+<li><p>you hit once.</p></li>
+</ul>
+</div></blockquote>
+<p>This could be inferred as hitting 100% of the time, and missing 10%.
+Making the total chance of the dice 110%.
+Whilst interpreting the rules this way are entirely down to you.
+It leaves the option open for you to go down this route if you want to.</p>
+<p>This attribute is also used on some of the more high level functions.
+This is as they split a dice into say two results,
+ones that are successful and ones that are unsuccessful.
+Having this attribute contained within the dice makes it simpler
+to handle the splitting and then combining of those dice.</p>
+</div>
+<div class="section" id="internal-chances">
+<span id="ds-t-internal-chances"></span><h3>Internal Chances<a class="headerlink" href="#internal-chances" title="Permalink to this headline">¶</a></h3>
+<p>These are the internal chances of the dice object. These are stored in a
+<code class="xref py py-class docutils literal notranslate"><span class="pre">dict</span></code> where the <a class="reference internal" href="#ds-t-internal-chances-chance"><span class="std std-ref">Internal Chances Chance</span></a> total 1.
+This has two major benefits:</p>
+<blockquote>
+<div><ul>
+<li><p>Allows us to at runtime check if there’s a critical error with the
+dice object and exit gracefully, rather than fail silently.</p>
+<p>Whilst I’m confident the code works due to tests. I also know that
+this feature helped development and debugging when I messed up
+different functions. It’s an extra fail safe to know the code isn’t
+completely broken.</p>
+<p>It may also help you if you start doing some fancy things with this
+library, as if you break the state of the <a class="reference internal" href="#ds-t-internal-chances"><span class="std std-ref">Internal Chances</span></a>
+then you know straight away, not after hours of debugging.</p>
+</li>
+<li><p>Keeping a mutable dictionary private, and keeping the amount of
+code that touch it to a minimum helps keep the logic of the
+Dice object reasonable. Passing a dice object to a function
+shouldn’t mutate the object. At every step of development I’ve
+kept immutability to be a core concept for the dice class.</p>
+<p>Given that creating dice statistics are complex enough, this can
+keep me, and hopefully you, to be at peace when making complex dice
+statistic functions. And should prevent easy to overlook issues with
+a mutable class.</p>
+</li>
+</ul>
+</div></blockquote>
+</div>
+<div class="section" id="internal-chances-chance">
+<span id="ds-t-internal-chances-chance"></span><h3>Internal Chances Chance<a class="headerlink" href="#internal-chances-chance" title="Permalink to this headline">¶</a></h3>
+<p>This is slightly different to the <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a>.
+This, the internal one, totals to 1, allowing some runtime validity checks.
+However the public <a class="reference internal" href="#ds-t-chances-chance"><span class="std std-ref">Chances Chance</span></a> total to whatever
+<a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a> is.</p>
+<p>For the most part, these are likely to be the same.</p>
+</div>
+</div>
+</div>
+
+
+          </div>
+          
+        </div>
+      </div>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<h1 class="logo"><a href="../index.html">dice_stats</a></h1>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Dice Stats</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#introduction">Introduction</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#module-dice_stats">Public library</a></li>
+<li class="toctree-l2"><a class="reference internal" href="#terminology">Terminology</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="tutorial.html">Tutorial</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../internal/index.html">Internal</a></li>
+</ul>
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+      <li>Previous: <a href="../index.html" title="previous chapter">Welcome to dice_stats’s documentation!</a></li>
+      <li>Next: <a href="tutorial.html" title="next chapter">Tutorial</a></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Go" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2019, Peilonrayz.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 2.2.0</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/public/public.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+  </body>
+</html>
