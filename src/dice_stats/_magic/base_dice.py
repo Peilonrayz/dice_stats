@@ -22,14 +22,14 @@ class BaseDice:
     Other magic dice classes inherit from this.
     """
 
-    __slots__ = ('_chances', '_total_chance')
+    __slots__ = ("_chances", "_total_chance")
     _chances: TChances
     _total_chance: TTotalChance
 
     def __init__(
-            self,
-            chances: Optional[TChances] = None,
-            total_chance: TChancesChance = fractions.Fraction(1, 1)
+        self,
+        chances: Optional[TChances] = None,
+        total_chance: TChancesChance = fractions.Fraction(1, 1),
     ) -> None:
         """
         Initialize Dice class.
@@ -41,16 +41,16 @@ class BaseDice:
         """
         if chances is None:
             chances = {}
-        if any(not isinstance(value, fractions.Fraction)
-               for value in chances.values()
+        if any(
+            not isinstance(value, fractions.Fraction) for value in chances.values()
         ):  # noqa
-            raise TypeError("Damage contains values that aren't"
-                            " fractions.Fraction.")
+            raise TypeError("Damage contains values that aren't" " fractions.Fraction.")
         if not isinstance(total_chance, fractions.Fraction):
             raise TypeError("Chance isn't a fractions.Fraction.")
         if sum(chances.values()) != 1:
-            raise ValueError(f"Chances don't add to 1, add to"
-                             f" {sum(chances.values())}.")
+            raise ValueError(
+                f"Chances don't add to 1, add to" f" {sum(chances.values())}."
+            )
 
         self._chances = copy.deepcopy(chances)
         self._total_chance = total_chance
@@ -78,9 +78,9 @@ class BaseDice:
 
     @classmethod
     def from_partial(  # pylint:disable=keyword-arg-before-vararg
-            cls,
-            chances: Optional[TChances] = None,
-            total_chance: TTotalChance = fractions.Fraction(1, 1),
+        cls,
+        chances: Optional[TChances] = None,
+        total_chance: TTotalChance = fractions.Fraction(1, 1),
     ):
         """
         From partial :ref:`ds-t-Internal Chances`.
@@ -109,9 +109,7 @@ class BaseDice:
 
     @classmethod
     def from_full(  # pylint:disable=keyword-arg-before-vararg
-            cls,
-            chances: TChances,
-            total_chance: TTotalChance = fractions.Fraction(1, 1),
+        cls, chances: TChances, total_chance: TTotalChance = fractions.Fraction(1, 1),
     ):
         """
         From full :ref:`ds-t-Internal Chances`.
@@ -127,10 +125,7 @@ class BaseDice:
         return cls(chances, total_chance=total_chance)
 
     @classmethod
-    def from_empty(
-            cls,
-            value: TChancesValue = cast(TChancesValue, 0)
-    ):
+    def from_empty(cls, value: TChancesValue = cast(TChancesValue, 0)):
         """
         Create an empty chance.
 
@@ -141,6 +136,5 @@ class BaseDice:
         :return: An empty dice.
         """
         return cls(
-            {value: fractions.Fraction(1, 1)},
-            total_chance=fractions.Fraction(1, 1),
+            {value: fractions.Fraction(1, 1)}, total_chance=fractions.Fraction(1, 1),
         )

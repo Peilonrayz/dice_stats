@@ -31,7 +31,6 @@ extensions = [
     'sphinx.ext.intersphinx',
     'sphinx_autodoc_typehints',
     'sphinx_rtd_theme',
-    'sphinx_markdown_builder',
 ]
 intersphinx_mapping = {
     'python': ('https://docs.python.org/3', None)

@@ -5,16 +5,22 @@ from __future__ import annotations
 import collections
 import fractions
 from typing import (
-    Any, Callable, Dict, Iterable, Iterator, Optional, Set,
-    Tuple, TypeVar, cast
+    Any,
+    Callable,
+    Dict,
+    Iterable,
+    Iterator,
+    Optional,
+    Set,
+    Tuple,
+    TypeVar,
+    cast,
 )
 
 from ._magic import Dice as BaseDice
-from ._types import (
-    TIntNumber, TChances, TChancesDD, TChancesValue, TTotalChance
-)
+from ._types import TChances, TChancesDD, TChancesValue, TIntNumber, TTotalChance
 
-T = TypeVar('T')  # pylint:disable=invalid-name
+T = TypeVar("T")  # pylint:disable=invalid-name
 
 
 class Dice(BaseDice):
@@ -94,11 +100,7 @@ class Dice(BaseDice):
         return cls.from_external(chances, total_chance=tot_chance)
 
     @classmethod
-    def from_external(
-            cls,
-            chances: TChances,
-            total_chance: TTotalChance
-    ) -> Dice:
+    def from_external(cls, chances: TChances, total_chance: TTotalChance) -> Dice:
         """
         Create a dice from the :ref:`ds-t-Chances` form.
 
@@ -110,18 +112,13 @@ class Dice(BaseDice):
         :return: A dice with the specified chances.
         """
         return cls.from_full(
-            {
-                value: chance / total_chance
-                for value, chance in chances.items()
-            },
-            total_chance=total_chance
+            {value: chance / total_chance for value, chance in chances.items()},
+            total_chance=total_chance,
         )
 
     @classmethod
     def from_dice(
-            cls,
-            sides: TIntNumber,
-            total_chance: TTotalChance = fractions.Fraction(1, 1),
+        cls, sides: TIntNumber, total_chance: TTotalChance = fractions.Fraction(1, 1),
     ) -> Dice:
         """
         Make a dice from a number of sides.
@@ -168,18 +165,12 @@ class Dice(BaseDice):
             )
         """
         value = fractions.Fraction(1, cast(int, sides))
-        values = {
-            cast(TChancesValue, key): value
-            for key in range(1, sides + 1)
-        }
+        values = {cast(TChancesValue, key): value for key in range(1, sides + 1)}
         return cls.from_full(values, total_chance=total_chance)
 
     @classmethod
     def from_prev_total_chance(
-            cls,
-            chances: TChances,
-            chance: TTotalChance,
-            prev_chance: TTotalChance,
+        cls, chances: TChances, chance: TTotalChance, prev_chance: TTotalChance,
     ) -> Dice:
         """
         Change a dice from one :ref:`ds-t-Total Chance` to another.
@@ -195,11 +186,7 @@ class Dice(BaseDice):
         """
         delta = prev_chance / chance
         return cls.from_full(
-            {
-                key: value * delta
-                for key, value in chances.items()
-            },
-            total_chance=chance,
+            {key: value * delta for key, value in chances.items()}, total_chance=chance,
         )
 
     def as_total_chance(self, total_chance: fractions.Fraction) -> Dice:
@@ -240,9 +227,9 @@ class Dice(BaseDice):
         return type(self)(self._chances, total_chance=total_chance)
 
     def apply_dice(
-            self,
-            chances: Dict[Iterable[TChancesValue], Dice],
-            default: Optional[Dice] = None
+        self,
+        chances: Dict[Iterable[TChancesValue], Dice],
+        default: Optional[Dice] = None,
     ) -> Dice:
         """
         Change chances to provided dice.
@@ -288,16 +275,15 @@ class Dice(BaseDice):
         """
         _chances_default(self, chances, default)
         return self.sum(
-            dice.as_total_chance(chance)
-            for _, chance, dice in _chances(self, chances)
+            dice.as_total_chance(chance) for _, chance, dice in _chances(self, chances)
         )
 
     # TODO: change to make the example not work, as it should change the %.
     def apply_functions(
-            self,
-            chances: Dict[Iterable[TChancesValue], Callable[[Dice], Dice]],
-            default: Optional[Callable[[Dice], Dice]] = None,
-            apply: Callable[[Dice], Dice] = lambda dice: dice,
+        self,
+        chances: Dict[Iterable[TChancesValue], Callable[[Dice], Dice]],
+        default: Optional[Callable[[Dice], Dice]] = None,
+        apply: Callable[[Dice], Dice] = lambda dice: dice,
     ) -> Dice:
         """
         Apply a callback to the provided chances.
@@ -409,19 +395,14 @@ class Dice(BaseDice):
         """
         one = fractions.Fraction(1, 1)
         dice_values = self._chances.copy()
-        chances: TChances = {
-            value: dice_values.pop(value)
-            for value in values
-        }
+        chances: TChances = {value: dice_values.pop(value) for value in values}
         chance = sum(chances.values(), fractions.Fraction())
         empty = Dice.from_partial({}, fractions.Fraction(0, 1))
         return (
-            Dice.from_prev_total_chance(chances, chance, one)
-            if chance else
-            empty,
+            Dice.from_prev_total_chance(chances, chance, one) if chance else empty,
             Dice.from_prev_total_chance(dice_values, one - chance, one)
-            if one - chance else
-            empty,
+            if one - chance
+            else empty,
         )
 
     def reroll(self, values: Iterable[TChancesValue]) -> Dice:
@@ -456,10 +437,7 @@ class Dice(BaseDice):
             )
         """
         rerolled, kept = self.partition(values)
-        return self.sum([
-            kept,
-            self.as_total_chance(rerolled.total_chance)
-        ])
+        return self.sum([kept, self.as_total_chance(rerolled.total_chance)])
 
     def max(self, other: Optional[Dice] = None) -> Dice:
         """
@@ -496,8 +474,7 @@ class Dice(BaseDice):
         one = fractions.Fraction(1, 1)
         return self.sum(
             Dice.from_full(
-                {max(value_1, value_2): one},
-                total_chance=chance_1 * chance_2,
+                {max(value_1, value_2): one}, total_chance=chance_1 * chance_2,
             )
             for value_1, chance_1 in self.items()
             for value_2, chance_2 in other.items()
@@ -505,35 +482,26 @@ class Dice(BaseDice):
 
 
 def _get_chances_keys(
-        dice: Dice,
-        keys: Iterable[TChancesValue]
+    dice: Dice, keys: Iterable[TChancesValue]
 ) -> Iterable[TChancesValue]:
     """Get keys from chances."""
-    return [
-        key
-        for key in dice.keys()
-        if key in keys
-    ]
+    return [key for key in dice.keys() if key in keys]
 
 
 def _chances(
-        dice: Dice,
-        chances: Dict[Iterable[TChancesValue], T]
+    dice: Dice, chances: Dict[Iterable[TChancesValue], T]
 ) -> Iterator[Tuple[Iterable[TChancesValue], fractions.Fraction, T]]:
     """Get chances."""
     for keys, other in chances.items():
         keys = _get_chances_keys(dice, keys)
-        chance = sum(
-            (dice[key] for key in keys),
-            fractions.Fraction(0, 1)
-        )
+        chance = sum((dice[key] for key in keys), fractions.Fraction(0, 1))
         yield keys, chance, other
 
 
 def _apply_chances(
-        dice: Dice,
-        chances: Dict[Iterable[TChancesValue], Callable[[Dice], Dice]],
-        apply: Callable[[Dice], Dice],
+    dice: Dice,
+    chances: Dict[Iterable[TChancesValue], Callable[[Dice], Dice]],
+    apply: Callable[[Dice], Dice],
 ) -> Iterator[Tuple[Iterable[TChancesValue], fractions.Fraction, Dice]]:
     """Apply chances."""
     for keys, chance, dice_builder in _chances(dice, chances):
@@ -544,23 +512,19 @@ def _apply_chances(
 
 
 def _chances_default(
-        dice: Dice,
-        chances: Dict[Iterable[TChancesValue], T],
-        default: Optional[T],
+    dice: Dice, chances: Dict[Iterable[TChancesValue], T], default: Optional[T],
 ) -> None:
     """Ensure default is added to the chances."""
     _keys = set(dice.keys())
     defaults = _find_default_chances(dice, _keys, chances)
     if defaults:
         if default is None:
-            raise ValueError('Missing chance options without a default.')
+            raise ValueError("Missing chance options without a default.")
         chances[defaults] = default
 
 
 def _find_default_chances(
-        dice: Dice,
-        keys: Set[TChancesValue],
-        chances: Dict[Iterable[TChancesValue], Any]
+    dice: Dice, keys: Set[TChancesValue], chances: Dict[Iterable[TChancesValue], Any]
 ) -> Tuple[TChancesValue, ...]:
     """Find default chances."""
     _keys = keys.copy()

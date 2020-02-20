@@ -9,7 +9,7 @@ from .display import plot_wireframes
 from .range import Range
 
 __all__ = [
-    'Dice',
-    'plot_wireframes',
-    'Range',
+    "Dice",
+    "plot_wireframes",
+    "Range",
 ]

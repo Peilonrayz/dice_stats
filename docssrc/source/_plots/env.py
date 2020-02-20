@@ -2,7 +2,7 @@ import pathlib
 
 import pytest
 
-BASE_PATH = pathlib.Path('docs/source/')
+BASE_PATH = pathlib.Path('docssrc/source/')
 
 
 def plot(path):
@@ -18,6 +18,7 @@ def plot(path):
         )
         def inner(*args, **kwargs):
             fig = fn(*args, **kwargs)
+            _path.mkdir(exist_ok=True, parents=True)
             fig.savefig(str(_path / (name + '.png')))
             fig.savefig(str(_path / (name + '.svg')))
         return inner

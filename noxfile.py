@@ -4,13 +4,7 @@ from pprint import pprint
 import nox
 
 
-@nox.session(python=["3.4"])
-def tests(session):
-    session.install(".", "pytest")
-    session.run("pytest")
-
-
-@nox.session(python=["2.7", "3.5", "3.6", "3.7", "3.8"])
+@nox.session(python=["3.7", "3.8"])
 def coverage(session):
     session.install("coverage>=5.0.0")
     session.install("-e", ".")
@@ -32,7 +26,8 @@ def coverage_report(session):
     session.install("coverage>=5.0.0")
     session.run("coverage", "html")
     session.notify("coverage_erase")
-    session.run("coverage", "report", "--fail-under=100", "--show-missing")
+    session.run("coverage", "report", "--show-missing")
+    # TODO: "--fail-under=100"
 
 
 @nox.session
@@ -61,7 +56,6 @@ def lint(session):
     session.env.pop("NOXSESSION", None)
     session.run("nox", "-r", "-f", "noxfile-lint.py", "--", *session.posargs)
 
-    
     # python setup.py check --strict --metadata
     # mypy src/dice_stats --config-file tox.ini
     # mypy tests --config-file tox.ini
@@ -88,9 +82,11 @@ def docs(session):
 
 @nox.session(python="3.8")
 def docs_test(session):
-    session.install(".", "sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", 'pytest')
+    session.install(
+        ".", "sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "pytest"
+    )
     shutil.rmtree("docssrc/build/", ignore_errors=True)
-    session.run('pytest', 'docssrc/source/')
+    session.run("pytest", "docssrc/source/")
     session.run(*docs_command("doctest"))
     session.run(*docs_command("linkcheck"))
     session.run(*docs_command("html"))

@@ -9,11 +9,11 @@ simpler to use as we don't need to think about mutability.
 
 from __future__ import annotations
 
-from typing import Iterator, Mapping
 import fractions
+from typing import Iterator, Mapping
 
+from .._types import TChancesChance, TChancesValue
 from .base_dice import BaseDice
-from .._types import TChancesValue, TChancesChance
 
 
 class MappingDice(BaseDice, Mapping[TChancesValue, TChancesChance]):

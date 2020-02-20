@@ -1,16 +1,14 @@
 """Some functions to make displaying dice data easier."""
 
-from typing import List, Iterator, Tuple, Sequence
+from typing import Iterator, List, Sequence, Tuple
 
 import numpy as np
 
-from .dice import Dice
 from ._types import TNumber
+from .dice import Dice
 
 
-def _graph_size(
-        results: List[List[Tuple[TNumber, Dice]]]
-) -> Sequence[TNumber]:
+def _graph_size(results: List[List[Tuple[TNumber, Dice]]]) -> Sequence[TNumber]:
     """Get the size of the graph."""
     keys = {
         key
@@ -23,8 +21,7 @@ def _graph_size(
 
 
 def _with_axes(
-        iterator: List[Tuple[TNumber, Dice]],
-        axes: Tuple[list, ...],
+    iterator: List[Tuple[TNumber, Dice]], axes: Tuple[list, ...],
 ) -> Iterator[Tuple[Tuple[list, ...], Tuple[TNumber, Dice]]]:
     """Add axes to the data."""
     for data in iterator:
@@ -37,8 +34,7 @@ def _with_axes(
 
 
 def plot_wireframes(
-        results_: List[Iterator[Tuple[TNumber, Dice]]],
-        only_positive: bool = False
+    results_: List[Iterator[Tuple[TNumber, Dice]]], only_positive: bool = False
 ) -> Iterator[Tuple[np.array, ...]]:
     """Build a graph from multiple dice results."""
     results = [list(result) for result in results_]
@@ -57,14 +53,14 @@ def plot_wireframes(
 
 
 COLOURS = [
-    'tab:blue',
-    'tab:orange',
-    'tab:green',
-    'tab:red',
-    'tab:purple',
-    'tab:brown',
-    'tab:pink',
-    'tab:gray',
-    'tab:olive',
-    'tab:cyan',
+    "tab:blue",
+    "tab:orange",
+    "tab:green",
+    "tab:red",
+    "tab:purple",
+    "tab:brown",
+    "tab:pink",
+    "tab:gray",
+    "tab:olive",
+    "tab:cyan",
 ]

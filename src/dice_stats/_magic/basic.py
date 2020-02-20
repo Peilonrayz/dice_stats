@@ -11,8 +11,8 @@ development easier.
 
 from __future__ import annotations
 
-from .mapping import MappingDice
 from .._types import ChancesValue
+from .mapping import MappingDice
 
 
 class BasicDice(MappingDice):
@@ -22,25 +22,24 @@ class BasicDice(MappingDice):
         """Repr format of Dice."""
         name = type(self).__qualname__
         values = {k: self[k] for k in sorted(self._chances)}
-        return f'{name}[{self._total_chance}]({values!r})'
+        return f"{name}[{self._total_chance}]({values!r})"
 
     def __str__(self) -> str:
         """Str format of Dice."""
         name = type(self).__qualname__
         keys = sorted(self._chances)
         max_k = len(str(max(keys)))
-        sep = '\n  '
+        sep = "\n  "
         value = sep.join(
-            f'{k: >{max_k}}'
-            f': {float(self[k]): >5.1%}'
-            f' {self[k].numerator: >2}'
-            f'/{self[k].denominator: <2}'
-            .rstrip()
+            f"{k: >{max_k}}"
+            f": {float(self[k]): >5.1%}"
+            f" {self[k].numerator: >2}"
+            f"/{self[k].denominator: <2}".rstrip()
             for k in keys
         )
         if not value:
-            return f'{name}[{self._total_chance}]()'
-        return f'{name}[{self._total_chance}]({sep}{value}\n)'
+            return f"{name}[{self._total_chance}]()"
+        return f"{name}[{self._total_chance}]({sep}{value}\n)"
 
     def __bool__(self) -> bool:
         """Falsy if the only :ref:`ds-t-Chances Chance` is 0."""

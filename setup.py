@@ -23,7 +23,7 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
-    install_requires=['numpy'],
+    install_requires=["numpy", "matplotlib",],
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",

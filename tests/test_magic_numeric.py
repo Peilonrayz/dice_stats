@@ -9,29 +9,15 @@ def test_addition():
     """Test addition works correctly."""
     d2 = Dice.from_dice(2)
     assert d2 + 2 == Dice.from_external(
-        {
-            3: Fraction(1, 2),
-            4: Fraction(1, 2),
-        },
-        Fraction(1, 1),
+        {3: Fraction(1, 2), 4: Fraction(1, 2),}, Fraction(1, 1),
     )
     assert d2 + d2 == Dice.from_external(
-        {
-            2: Fraction(1, 4),
-            3: Fraction(2, 4),
-            4: Fraction(1, 4),
-        },
-        Fraction(1, 1),
+        {2: Fraction(1, 4), 3: Fraction(2, 4), 4: Fraction(1, 4),}, Fraction(1, 1),
     )
 
     d3 = Dice.from_dice(3)
     assert d3 + 2 == Dice.from_external(
-        {
-            3: Fraction(1, 3),
-            4: Fraction(1, 3),
-            5: Fraction(1, 3),
-        },
-        Fraction(1, 1),
+        {3: Fraction(1, 3), 4: Fraction(1, 3), 5: Fraction(1, 3),}, Fraction(1, 1),
     )
     assert d3 + d3 == Dice.from_external(
         {
@@ -49,20 +35,10 @@ def test_multiplication():
     """Test multiplication works correctly."""
     d2 = Dice.from_dice(2)
     assert 2 * d2 == Dice.from_external(
-        {
-            2: Fraction(1, 4),
-            3: Fraction(2, 4),
-            4: Fraction(1, 4),
-        },
-        Fraction(1, 1),
+        {2: Fraction(1, 4), 3: Fraction(2, 4), 4: Fraction(1, 4),}, Fraction(1, 1),
     )
     assert d2 * 3 == Dice.from_external(
-        {
-            3: Fraction(1, 8),
-            4: Fraction(3, 8),
-            5: Fraction(3, 8),
-            6: Fraction(1, 8),
-        },
+        {3: Fraction(1, 8), 4: Fraction(3, 8), 5: Fraction(3, 8), 6: Fraction(1, 8),},
         Fraction(1, 1),
     )
 

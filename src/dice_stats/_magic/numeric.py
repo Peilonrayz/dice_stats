@@ -37,14 +37,13 @@ For the examples :code:`d6` is defined as :code:`Dice.from_dice(6)`.
 from __future__ import annotations
 
 import collections
+import fractions
 import functools
 import operator
-import fractions
-from typing import Callable, Union, cast, Optional
+from typing import Callable, Optional, Union, cast
 
+from .._types import ChancesValue, TChancesDD, TChancesValue, TIntNumber
 from .mapping import MappingDice
-
-from .._types import TChancesValue, TIntNumber, ChancesValue, TChancesDD
 
 # TODO: __divmod__
 Other = Union[MappingDice, TChancesValue]
@@ -53,124 +52,64 @@ Other = Union[MappingDice, TChancesValue]
 class NumericDice(MappingDice):
     """Mixins for numeric operators."""
 
-    def __add__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __add__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.add)
 
-    def __radd__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __radd__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.add)
 
-    def __sub__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __sub__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.sub)
 
-    def __rsub__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rsub__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.sub)
 
-    def __truediv__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __truediv__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.truediv)
 
-    def __rtruediv__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rtruediv__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.truediv)
 
-    def __floordiv__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __floordiv__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.floordiv)
 
-    def __rfloordiv__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rfloordiv__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.floordiv)
 
-    def __mod__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __mod__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.mod)
 
-    def __rmod__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rmod__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.mod)
 
-    def __lshift__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __lshift__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.lshift)
 
-    def __rlshift__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rlshift__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.lshift)
 
-    def __rshift__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rshift__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.rshift)
 
-    def __rrshift__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rrshift__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.rshift)
 
-    def __and__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __and__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.and_)
 
-    def __rand__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rand__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.and_)
 
-    def __xor__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __xor__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.xor)
 
-    def __rxor__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __rxor__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.xor)
 
-    def __or__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __or__(self, other: Other,) -> NumericDice:
         return operation(self, other, operator.or_)
 
-    def __ror__(
-            self,
-            other: Other,
-    ) -> NumericDice:
+    def __ror__(self, other: Other,) -> NumericDice:
         return roperation(other, self, operator.or_)
 
     def __neg__(self) -> NumericDice:
@@ -206,19 +145,19 @@ class NumericDice(MappingDice):
 
 
 def repeat_operation(
-        dice: NumericDice,
-        value: TIntNumber,
-        operator_: Callable[[NumericDice, NumericDice], NumericDice]
+    dice: NumericDice,
+    value: TIntNumber,
+    operator_: Callable[[NumericDice, NumericDice], NumericDice],
 ) -> NumericDice:
     """Handle repeating an operation."""
     if not isinstance(value, TIntNumber):
-        raise TypeError('Non-dice operand must be a number.')
+        raise TypeError("Non-dice operand must be a number.")
     if value == 0:
         return type(dice).from_partial(total_chance=dice.total_chance)
     if value < 0:
-        raise ValueError('Power must be non-negative.')
+        raise ValueError("Power must be non-negative.")
     if value % 1:
-        raise ValueError('Power must be an integer.')
+        raise ValueError("Power must be an integer.")
     new_dice = dice.copy()
     for _ in range(value - 1):
         new_dice = operator_(new_dice, dice)
@@ -227,9 +166,9 @@ def repeat_operation(
 
 # pylint:disable=protected-access
 def operation(
-        lhs: MappingDice,
-        rhs: object,
-        operation_: Callable[[TChancesValue, TChancesValue], TChancesValue]
+    lhs: MappingDice,
+    rhs: object,
+    operation_: Callable[[TChancesValue, TChancesValue], TChancesValue],
 ) -> NumericDice:
     """Handle the normal direction of operations."""
     new: TChancesDD = collections.defaultdict(fractions.Fraction)
@@ -238,8 +177,7 @@ def operation(
             for value_2, chance_2 in rhs._chances.items():
                 new[operation_(value_1, value_2)] += chance_1 * chance_2
         return type(lhs).from_full(
-            new,
-            total_chance=lhs.total_chance * rhs.total_chance
+            new, total_chance=lhs.total_chance * rhs.total_chance
         )
 
     if isinstance(rhs, ChancesValue):
@@ -251,9 +189,9 @@ def operation(
 
 
 def roperation(
-        lhs: object,
-        rhs: MappingDice,
-        operator_: Callable[[TChancesValue, TChancesValue], TChancesValue]
+    lhs: object,
+    rhs: MappingDice,
+    operator_: Callable[[TChancesValue, TChancesValue], TChancesValue],
 ) -> NumericDice:
     """Handle the reverse of common operations."""
     new: TChancesDD = collections.defaultdict(fractions.Fraction)
@@ -262,8 +200,7 @@ def roperation(
             for value_2, chance_2 in lhs._chances.items():
                 new[operator_(value_2, value_1)] += chance_1 * chance_2
         return type(rhs).from_full(
-            new,
-            total_chance=lhs.total_chance * rhs.total_chance
+            new, total_chance=lhs.total_chance * rhs.total_chance
         )
 
     if isinstance(lhs, ChancesValue):
@@ -275,8 +212,7 @@ def roperation(
 
 
 def soperation(
-        self: MappingDice,
-        operator_: Callable[[TChancesValue], TChancesValue]
+    self: MappingDice, operator_: Callable[[TChancesValue], TChancesValue]
 ) -> NumericDice:
     """Handel's single operand operations."""
     new: TChancesDD = collections.defaultdict(fractions.Fraction)
@@ -288,7 +224,7 @@ def soperation(
 class NonRepeat:
     """Allow alternate form of multiplication and powers."""
 
-    __slots__ = ('_dice',)
+    __slots__ = ("_dice",)
     _dice: MappingDice
 
     def __init__(self, dice: NumericDice) -> None:
@@ -302,9 +238,7 @@ class NonRepeat:
         return roperation(other, self._dice, operator.mul)
 
     def __pow__(
-            self,
-            other: Other,
-            modulo: Optional[TChancesValue] = None,
+        self, other: Other, modulo: Optional[TChancesValue] = None,
     ) -> NumericDice:
         return operation(
             self._dice,
@@ -312,15 +246,13 @@ class NonRepeat:
             cast(
                 Callable[[TChancesValue, TChancesValue], TChancesValue],
                 operator.pow
-                if modulo is None else
-                functools.partial(operator.pow, modulo=modulo),
+                if modulo is None
+                else functools.partial(operator.pow, modulo=modulo),
             ),
         )
 
     def __rpow__(
-            self,
-            other: Other,
-            modulo: Optional[TChancesValue] = None
+        self, other: Other, modulo: Optional[TChancesValue] = None
     ) -> NumericDice:
         return roperation(
             other,
@@ -328,7 +260,7 @@ class NonRepeat:
             cast(
                 Callable[[TChancesValue, TChancesValue], TChancesValue],
                 operator.pow
-                if modulo is None else
-                functools.partial(operator.pow, modulo=modulo),
+                if modulo is None
+                else functools.partial(operator.pow, modulo=modulo),
             ),
         )

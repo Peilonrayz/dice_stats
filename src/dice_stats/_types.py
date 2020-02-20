@@ -1,8 +1,8 @@
 """Generic types used across the project."""
 
-import numbers
 import fractions
-from typing import Union, Dict, DefaultDict, Mapping
+import numbers
+from typing import DefaultDict, Dict, Mapping, Union
 
 TFloatNumber = numbers.Real
 FloatNumber = numbers.Real
