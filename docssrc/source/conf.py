@@ -1,42 +1,47 @@
+import datetime
 import pathlib
 import sys
-import datetime
+
+try:
+    import ConfigParser as configparser
+except ImportError:
+    import configparser
 
 FILE_PATH = pathlib.Path(__file__).absolute()
 
 # Add documentation for tests
 TLD = FILE_PATH.parent.parent.parent
 sys.path.insert(0, str(TLD))
+config = configparser.ConfigParser()
+config.read(TLD / "setup.cfg")
 
-project = 'dice_stats'
-author = 'Peilonrayz'
-copyright = f'{datetime.datetime.now().year}, {author}'
-release = '0.0.1'
+project = "dice_stats"
+author = "Peilonrayz"
+copyright = f"{datetime.datetime.now().year}, {author}"
+release = config.get("src", "version")
 
-master_doc = 'index'
-templates_path = ['_templates']
+master_doc = "index"
+templates_path = ["_templates"]
 exclude_patterns = []
 
-doctest_global_setup = '''
+doctest_global_setup = """
 from fractions import Fraction
 
 from dice_stats import Dice, Range
-'''
+"""
 
 extensions = [
-    'sphinx.ext.autodoc',
-    'sphinx.ext.doctest',
-    'sphinx.ext.graphviz',
-    'sphinx.ext.githubpages',
-    'sphinx.ext.intersphinx',
-    'sphinx_autodoc_typehints',
-    'sphinx_rtd_theme',
+    "sphinx.ext.autodoc",
+    "sphinx.ext.doctest",
+    "sphinx.ext.graphviz",
+    "sphinx.ext.githubpages",
+    "sphinx.ext.intersphinx",
+    "sphinx_autodoc_typehints",
+    "sphinx_rtd_theme",
 ]
-intersphinx_mapping = {
-    'python': ('https://docs.python.org/3', None)
-}
+intersphinx_mapping = {"python": ("https://docs.python.org/3", None)}
 
-html_theme = 'sphinx_rtd_theme'
-html_static_path = ['_static']
+html_theme = "sphinx_rtd_theme"
+html_static_path = ["_static"]
 
 set_type_checking_flag = True

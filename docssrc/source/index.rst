@@ -1,4 +1,4 @@
-Welcome to dice_stats's documentation!
+Welcome to Dice Stats's documentation!
 ======================================
 
 If you're new to the library, you may want to have a look at the

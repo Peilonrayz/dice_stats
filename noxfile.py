@@ -36,7 +36,14 @@ def coverage_erase(session):
     session.run("coverage", "erase")
 
 
-FILES = ["src", "tests", "noxfile.py", "noxfile-lint.py", "setup.py"]
+FILES = [
+    "src",
+    "tests",
+    "noxfile.py",
+    "noxfile-lint.py",
+    "setup.py",
+    "docssrc/source/conf.py",
+]
 
 
 @nox.session
