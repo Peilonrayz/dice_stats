@@ -92,7 +92,8 @@ def docs(session):
 
 @nox.session(python="3.8")
 def docs_test(session):
-    session.install(".[optional]", *DOCS)
+    session.install(".[optional]", *DOCS, "pytest")
+    session.install("--upgrade", "matplotlib")
     shutil.rmtree("docssrc/build/", ignore_errors=True)
     session.run("pytest", "docssrc/source/")
     session.run(*docs_command("doctest"))
