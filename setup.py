@@ -31,19 +31,7 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
-    extras_require={
-        "display": ["numpy"],
-        "docs": ["numpy", "matplotlib"],
-        "tests": ["numpy", "matplotlib", "pytest", "pytest-cov"],
-        "docs_tests": [
-            "numpy",
-            "matplotlib",
-            "pytest",
-            "sphinx",
-            "sphinx_rtd_theme",
-            "sphinx-autodoc-typehints",
-        ],
-    },
+    extras_require={"optional": ["numpy", "matplotlib"],},
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",

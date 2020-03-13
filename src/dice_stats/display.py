@@ -10,7 +10,7 @@ try:
 except ImportError as exc:
     raise ImportError(
         "Cannot import numpy. "
-        "Install the package with 'pip install dice_stats[display]' to fulfill "
+        "Install the package with 'pip install dice_stats[optional]' to fulfill "
         "optional dependencies."
     ).with_traceback(exc.__traceback__)
 

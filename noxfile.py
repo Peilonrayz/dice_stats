@@ -7,7 +7,8 @@ import nox
 @nox.session(python=["3.7", "3.8"])
 def coverage(session):
     session.install("coverage>=5.0.0")
-    session.install("-e", ".[tests]")
+    session.install("-e", ".[optional]")
+    session.install("pytest", "pytest-cov")
     session.run(
         "pytest",
         "--cov=src",
@@ -70,6 +71,9 @@ def lint(session):
     # prospector --profile prospector-docstrings.yaml
 
 
+DOCS = "sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints"
+
+
 def docs_command(builder):
     return [
         "sphinx-build",
@@ -88,7 +92,7 @@ def docs(session):
 
 @nox.session(python="3.8")
 def docs_test(session):
-    session.install(".[docs_tests]")
+    session.install(".[optional]", *DOCS)
     shutil.rmtree("docssrc/build/", ignore_errors=True)
     session.run("pytest", "docssrc/source/")
     session.run(*docs_command("doctest"))
@@ -99,6 +103,6 @@ def docs_test(session):
 
 @nox.session(python="3.8")
 def docs_build(session):
-    session.install(".[docs_tests]")
+    session.install(".[optional]", *DOCS)
     shutil.rmtree("docs/", ignore_errors=True)
     session.run("sphinx-build", "-b", "html", "docssrc/source", "docs", "-a")
