@@ -7,8 +7,7 @@ import nox
 @nox.session(python=["3.7", "3.8"])
 def coverage(session):
     session.install("coverage>=5.0.0")
-    session.install("-e", ".")
-    session.install("pytest", "pytest-cov")
+    session.install("-e", ".[tests]")
     session.run(
         "pytest",
         "--cov=src",
@@ -89,9 +88,7 @@ def docs(session):
 
 @nox.session(python="3.8")
 def docs_test(session):
-    session.install(
-        ".", "sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints", "pytest"
-    )
+    session.install(".[docs_tests]")
     shutil.rmtree("docssrc/build/", ignore_errors=True)
     session.run("pytest", "docssrc/source/")
     session.run(*docs_command("doctest"))
@@ -102,6 +99,6 @@ def docs_test(session):
 
 @nox.session(python="3.8")
 def docs_build(session):
-    session.install(".", "sphinx", "sphinx_rtd_theme", "sphinx-autodoc-typehints")
+    session.install(".[docs_tests]")
     shutil.rmtree("docs/", ignore_errors=True)
     session.run("sphinx-build", "-b", "html", "docssrc/source", "docs", "-a")

@@ -1,5 +1,12 @@
-import mpl_toolkits.mplot3d
-import matplotlib.pyplot as plt
+try:
+    import mpl_toolkits.mplot3d
+    import matplotlib.pyplot as plt
+except ImportError as exc:
+    raise ImportError(
+        "Cannot import matplotlib. "
+        "Install the package with 'pip install dice_stats[docs]' to fulfill "
+        "optional dependencies."
+    ).with_traceback(exc.__traceback__)
 
 from dice_stats import display, Dice, Range
 

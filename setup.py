@@ -31,7 +31,19 @@ setup(
     package_dir={"": "src"},
     include_package_data=True,
     zip_safe=False,
-    install_requires=["numpy", "matplotlib",],
+    extras_require={
+        "display": ["numpy"],
+        "docs": ["numpy", "matplotlib"],
+        "tests": ["numpy", "matplotlib", "pytest", "pytest-cov"],
+        "docs_tests": [
+            "numpy",
+            "matplotlib",
+            "pytest",
+            "sphinx",
+            "sphinx_rtd_theme",
+            "sphinx-autodoc-typehints",
+        ],
+    },
     classifiers=[
         "Development Status :: 3 - Alpha",
         "Environment :: Console",
