@@ -173,12 +173,12 @@ def operation(
     """Handle the normal direction of operations."""
     new: TChancesDD = collections.defaultdict(fractions.Fraction)
     if isinstance(rhs, MappingDice):
+        if lhs.total_chance != rhs.total_chance:
+            raise ValueError("Can't multiply two dice with different total chances")
         for value_1, chance_1 in lhs._chances.items():
             for value_2, chance_2 in rhs._chances.items():
                 new[operation_(value_1, value_2)] += chance_1 * chance_2
-        return type(lhs).from_full(
-            new, total_chance=lhs.total_chance * rhs.total_chance
-        )
+        return type(lhs).from_full(new, total_chance=lhs.total_chance)
 
     if isinstance(rhs, ChancesValue):
         for value, chance in lhs._chances.items():

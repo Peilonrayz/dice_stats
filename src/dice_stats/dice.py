@@ -189,7 +189,10 @@ class Dice(BaseDice):
             {key: value * delta for key, value in chances.items()}, total_chance=chance,
         )
 
-    def as_total_chance(self, total_chance: fractions.Fraction) -> Dice:
+    def __matmul__(self, total_chance: Union[fractions.Fraction, Dice, int]) -> Dice:
+        return self.as_total_chance(total_chance)
+
+    def as_total_chance(self, total_chance: Union[fractions.Fraction, Dice, int]) -> Dice:
         """
         Change :ref:`ds-t-Total Chance`.
 

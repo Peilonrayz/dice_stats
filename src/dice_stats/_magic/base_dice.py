@@ -29,7 +29,7 @@ class BaseDice:
     def __init__(
         self,
         chances: Optional[TChances] = None,
-        total_chance: TChancesChance = fractions.Fraction(1, 1),
+        total_chance: Union[fractions.Fraction, Dice, int] = fractions.Fraction(1, 1),
     ) -> None:
         """
         Initialize Dice class.
@@ -45,8 +45,14 @@ class BaseDice:
             not isinstance(value, fractions.Fraction) for value in chances.values()
         ):  # noqa
             raise TypeError("Damage contains values that aren't" " fractions.Fraction.")
+
+        if isinstance(total_chance, BaseDice):
+            total_chance = total_chance._total_chance
+        elif isinstance(total_chance, int):
+            total_chance = fractions.Fraction(total_chance)
         if not isinstance(total_chance, fractions.Fraction):
             raise TypeError("Chance isn't a fractions.Fraction.")
+
         if sum(chances.values()) != 1:
             raise ValueError(
                 f"Chances don't add to 1, add to" f" {sum(chances.values())}."
