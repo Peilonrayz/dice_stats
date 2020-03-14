@@ -10,7 +10,7 @@ from __future__ import annotations
 
 import copy
 import fractions
-from typing import Optional, cast
+from typing import Optional, Union, cast
 
 from .._types import TChances, TChancesChance, TChancesValue, TTotalChance
 
@@ -29,7 +29,9 @@ class BaseDice:
     def __init__(
         self,
         chances: Optional[TChances] = None,
-        total_chance: Union[fractions.Fraction, Dice, int] = fractions.Fraction(1, 1),
+        total_chance: Union[fractions.Fraction, BaseDice, int] = fractions.Fraction(
+            1, 1
+        ),
     ) -> None:
         """
         Initialize Dice class.

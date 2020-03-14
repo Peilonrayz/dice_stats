@@ -23,9 +23,9 @@ def test_apply_dice():
 
 def test_apply_functions():
     """Test apply_functions works correctly."""
-    assert Dice.from_dice(6).apply_functions(
-        {(1,): lambda _: Dice.from_dice(6)}, lambda d: d,
-    ) == Dice.from_full(
+    d6 = Dice.from_dice(6)
+    result = d6.apply_functions({(1,): lambda d: d6 @ d}, lambda d: d,)
+    expected = Dice.from_full(
         {
             1: Fraction(1, 36),
             2: Fraction(7, 36),
@@ -35,6 +35,7 @@ def test_apply_functions():
             6: Fraction(7, 36),
         }
     )
+    assert result == expected
 
 
 def test_as_total_chance():

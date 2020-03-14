@@ -137,7 +137,7 @@ we just return what we were given, as those chances don't change.
     d = (
         Dice.from_dice(6)
             .apply_functions(
-                {(1, 2): lambda d: Dice.from_dice(6)},
+                {(1, 2): lambda d: Dice.from_dice(6) @ d},
                 lambda d: d,
             )
     )
@@ -230,7 +230,7 @@ natural numbers.
             return (results + modifier).apply_dice(
                 {Range.from_range(f'[{ac},]'): damage},
                 Dice.from_empty(),
-            )
+            ) @ results
         return inner
 
     def dnd_attack(
@@ -242,8 +242,8 @@ natural numbers.
     ):
         return hit.apply_functions(
             {
-                (1,): lambda _: Dice.from_empty(),
-                (20,): lambda _: critical_damage,
+                (1,): lambda d: Dice.from_empty() @ d,
+                (20,): lambda d: critical_damage @ d,
             },
             _dnd_attack(modifier, ac, damage)
         )

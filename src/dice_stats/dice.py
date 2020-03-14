@@ -14,6 +14,7 @@ from typing import (
     Set,
     Tuple,
     TypeVar,
+    Union,
     cast,
 )
 
@@ -280,10 +281,10 @@ class Dice(BaseDice):
         """
         _chances_default(self, chances, default)
         return self.sum(
-            dice.as_total_chance(chance) for _, chance, dice in _chances(self, chances)
+            dice.as_total_chance(dice.total_chance * chance)
+            for _, chance, dice in _chances(self, chances)
         )
 
-    # TODO: change to make the example not work, as it should change the %.
     def apply_functions(
         self,
         chances: Dict[Iterable[TChancesValue], Callable[[Dice], Dice]],
@@ -328,7 +329,7 @@ class Dice(BaseDice):
             print(
                 Dice.from_dice(6)
                     .apply_functions(
-                        {(1,): lambda _: Dice.from_dice(6)},
+                        {(1,): lambda d: Dice.from_dice(6) @ d},
                         lambda d: d,
                     )
             )
@@ -346,8 +347,7 @@ class Dice(BaseDice):
         """
         _chances_default(self, chances, default)
         return self.sum(
-            dice.as_total_chance(chance)
-            for _, chance, dice in _apply_chances(self, chances, apply)
+            dice for _, chance, dice in _apply_chances(self, chances, apply)
         )
 
     def partition(self, values: Iterable[TChancesValue]) -> Tuple[Dice, Dice]:
