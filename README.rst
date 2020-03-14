@@ -38,3 +38,20 @@ License
 -------
 
 Dice Stats is available under the MIT license.
+
+
+Change Log
+----------
+
+1.1.0
++++++
+
+-  Change ``Dice.apply_function`` and ``apply_dice`` to allow changes to the total chance.
+-  Add matmul, ``@``, as an operator to change total chance.
+-  Don't change the total chance of dice multiplied together.
+-  Make numpy and matplotlib optional dependencies
+
+1.0.0
++++++
+
+-  Released publicly

@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Tutorial &mdash; dice_stats 1.0.0 documentation</title>
+  <title>Tutorial &mdash; dice_stats 1.1.0 documentation</title>
   
 
   
@@ -273,7 +273,7 @@ we just return what we were given, as those chances don’t change.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="n">d</span> <span class="o">=</span> <span class="p">(</span>
     <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
         <span class="o">.</span><span class="n">apply_functions</span><span class="p">(</span>
-            <span class="p">{(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)},</span>
+            <span class="p">{(</span><span class="mi">1</span><span class="p">,</span> <span class="mi">2</span><span class="p">):</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">@</span> <span class="n">d</span><span class="p">},</span>
             <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span>
         <span class="p">)</span>
 <span class="p">)</span>
@@ -355,9 +355,9 @@ natural numbers.</p>
 <span class="p">):</span>
     <span class="k">def</span> <span class="nf">inner</span><span class="p">(</span><span class="n">results</span><span class="p">):</span>
         <span class="k">return</span> <span class="p">(</span><span class="n">results</span> <span class="o">+</span> <span class="n">modifier</span><span class="p">)</span><span class="o">.</span><span class="n">apply_dice</span><span class="p">(</span>
-            <span class="p">{</span><span class="n">Range</span><span class="o">.</span><span class="n">from_range</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{ac}</span><span class="s1">,]&#39;</span><span class="p">):</span> <span class="n">damage</span><span class="p">},</span>
+            <span class="p">{</span><span class="n">Range</span><span class="o">.</span><span class="n">from_range</span><span class="p">(</span><span class="sa">f</span><span class="s1">&#39;[</span><span class="si">{</span><span class="n">ac</span><span class="si">}</span><span class="s1">,]&#39;</span><span class="p">):</span> <span class="n">damage</span><span class="p">},</span>
             <span class="n">Dice</span><span class="o">.</span><span class="n">from_empty</span><span class="p">(),</span>
-        <span class="p">)</span>
+        <span class="p">)</span> <span class="o">@</span> <span class="n">results</span>
     <span class="k">return</span> <span class="n">inner</span>
 
 <span class="k">def</span> <span class="nf">dnd_attack</span><span class="p">(</span>
@@ -369,8 +369,8 @@ natural numbers.</p>
 <span class="p">):</span>
     <span class="k">return</span> <span class="n">hit</span><span class="o">.</span><span class="n">apply_functions</span><span class="p">(</span>
         <span class="p">{</span>
-            <span class="p">(</span><span class="mi">1</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_empty</span><span class="p">(),</span>
-            <span class="p">(</span><span class="mi">20</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">critical_damage</span><span class="p">,</span>
+            <span class="p">(</span><span class="mi">1</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_empty</span><span class="p">()</span> <span class="o">@</span> <span class="n">d</span><span class="p">,</span>
+            <span class="p">(</span><span class="mi">20</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">critical_damage</span> <span class="o">@</span> <span class="n">d</span><span class="p">,</span>
         <span class="p">},</span>
         <span class="n">_dnd_attack</span><span class="p">(</span><span class="n">modifier</span><span class="p">,</span> <span class="n">ac</span><span class="p">,</span> <span class="n">damage</span><span class="p">)</span>
     <span class="p">)</span>

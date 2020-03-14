@@ -8,7 +8,7 @@
   
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   
-  <title>Dice Stats &mdash; dice_stats 1.0.0 documentation</title>
+  <title>Dice Stats &mdash; dice_stats 1.1.0 documentation</title>
   
 
   
@@ -273,7 +273,7 @@ allowed to reroll 1s once, then we could use the following code.</p>
 <div class="highlight-python3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span>
     <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span>
         <span class="o">.</span><span class="n">apply_functions</span><span class="p">(</span>
-            <span class="p">{(</span><span class="mi">1</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">_</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)},</span>
+            <span class="p">{(</span><span class="mi">1</span><span class="p">,):</span> <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">Dice</span><span class="o">.</span><span class="n">from_dice</span><span class="p">(</span><span class="mi">6</span><span class="p">)</span> <span class="o">@</span> <span class="n">d</span><span class="p">},</span>
             <span class="k">lambda</span> <span class="n">d</span><span class="p">:</span> <span class="n">d</span><span class="p">,</span>
         <span class="p">)</span>
 <span class="p">)</span>
@@ -299,7 +299,7 @@ allowed to reroll 1s once, then we could use the following code.</p>
 the old and new <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
 <dl class="field-list simple">
 <dt class="field-odd">Parameters</dt>
-<dd class="field-odd"><p><strong>total_chance</strong> (<a class="reference external" href="https://docs.python.org/3/library/fractions.html#fractions.Fraction" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></a>) – Desired <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
+<dd class="field-odd"><p><strong>total_chance</strong> (<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Union" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Union</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/fractions.html#fractions.Fraction" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Fraction</span></code></a>, <code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code>, <a class="reference external" href="https://docs.python.org/3/library/functions.html#int" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">int</span></code></a>]) – Desired <a class="reference internal" href="#ds-t-total-chance"><span class="std std-ref">Total Chance</span></a>.</p>
 </dd>
 <dt class="field-even">Return type</dt>
 <dd class="field-even"><p><code class="xref py py-class docutils literal notranslate"><span class="pre">Dice</span></code></p>
@@ -738,17 +738,6 @@ expressed as:</p>
 <code class="sig-name descname">values</code><span class="sig-paren">(</span><span class="sig-paren">)</span> &#x2192; an object providing a view on D's values<a class="headerlink" href="#dice_stats.Dice.values" title="Permalink to this definition">¶</a></dt>
 <dd></dd></dl>
 
-</dd></dl>
-
-<dl class="function">
-<dt id="dice_stats.plot_wireframes">
-<code class="sig-prename descclassname">dice_stats.</code><code class="sig-name descname">plot_wireframes</code><span class="sig-paren">(</span><em class="sig-param">results_</em>, <em class="sig-param">only_positive=False</em><span class="sig-paren">)</span><a class="headerlink" href="#dice_stats.plot_wireframes" title="Permalink to this definition">¶</a></dt>
-<dd><p>Build a graph from multiple dice results.</p>
-<dl class="field-list simple">
-<dt class="field-odd">Return type</dt>
-<dd class="field-odd"><p><a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Iterator" title="(in Python v3.8)"><code class="xref py py-class docutils literal notranslate"><span class="pre">Iterator</span></code></a>[<a class="reference external" href="https://docs.python.org/3/library/typing.html#typing.Tuple" title="(in Python v3.8)"><code class="xref py py-data docutils literal notranslate"><span class="pre">Tuple</span></code></a>[<code class="xref py py-class docutils literal notranslate"><span class="pre">array</span></code>, …]]</p>
-</dd>
-</dl>
 </dd></dl>
 
 <dl class="class">
